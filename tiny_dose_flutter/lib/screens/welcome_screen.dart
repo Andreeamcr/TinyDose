@@ -1,20 +1,33 @@
+// ignore_for_file: unnecessary_string_escapes
+
 import 'package:flutter/material.dart';
-import 'package:tiny_dose_flutter/utils/app_theme.dart';
+import 'package:lottie/lottie.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:tiny_dose_flutter/components/rotating_text_widget.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static String id = 'welcome';
 
   const WelcomeScreen({super.key});
   @override
-  _WelcomeScreenState createState() => _WelcomeScreenState();
+  WelcomeScreenState createState() => WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: Text('abc'),
+      body: ListView(
+        children: [
+          Column(
+            children: [
+              Lottie.asset('assets/animations/Animation - 1713710022948.json'),
+              RotatingTextWidget(),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
