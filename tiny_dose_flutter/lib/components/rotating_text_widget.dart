@@ -1,55 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 
-class RotatingTextWidget extends StatefulWidget {
+class TextAnimation extends StatefulWidget {
+  const TextAnimation({super.key});
+
   @override
-  State<RotatingTextWidget> createState() => _RotatingTextWidgetState();
+  State<TextAnimation> createState() => _TextAnimationState();
 }
 
-class _RotatingTextWidgetState extends State<RotatingTextWidget>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 10),
-      vsync: this,
-    );
-    // _controller.forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
+class _TextAnimationState extends State<TextAnimation> {
+  double customOpacity = 0;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        AnimatedTextKit(
-          isRepeatingAnimation: false,
-          // totalRepeatCount: 0,
-          // repeatForever: true,
-          // pause: Duration(seconds: 100),
-          animatedTexts: [
-            RotateAnimatedText(
-              'Welcome to TinyDose!',
-              textStyle: const TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-              ),
-              duration: const Duration(seconds: 4),
-            ),
-          ],
-          // onFinished: () => const Text('Welcome to TinyDose!'),
-          onFinished: () => const Text('Welcome to TinyDose!'),
-        ),
-      ],
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          TweenAnimationBuilder(
+            onEnd: () {
+              setState(() {
+                customOpacity = 1;
+              });
+            },
+            curve: Curves.bounceOut,
+            tween: Tween<double>(begin: 30, end: 100),
+            duration: const Duration(milliseconds: 500),
+            builder: (context, dynamic value, child) {
+              return Container();
+            },
+          ),
+          AnimatedOpacity(
+            opacity: customOpacity,
+            duration: const Duration(milliseconds: 800),
+            child: const Text('Welcome to TinyDose!',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                    color: Color.fromARGB(255, 4, 46, 94))),
+          ),
+        ],
+      ),
     );
   }
 }
