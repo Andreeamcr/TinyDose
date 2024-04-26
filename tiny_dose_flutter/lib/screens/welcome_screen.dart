@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:tiny_dose_flutter/components/rotating_text_widget.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -23,7 +22,20 @@ class WelcomeScreenState extends State<WelcomeScreen> {
           Column(
             children: [
               Lottie.asset('assets/animations/Animation - 1713710022948.json'),
-              RotatingTextWidget(),
+              const TextAnimation(),
+              const SizedBox(
+                height: 12,
+              ),
+              IconButton(
+                onPressed: () {
+                  print('Hello from WelcomeScreen!');
+                },
+                icon: const Icon(
+                  Icons.arrow_circle_right_outlined,
+                  color: Color.fromARGB(202, 252, 86, 86),
+                  size: 50,
+                ),
+              ),
             ],
           ),
         ],
