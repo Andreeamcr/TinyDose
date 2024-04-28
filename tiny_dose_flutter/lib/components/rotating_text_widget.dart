@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiny_dose_flutter/utils/constants.dart';
 
 class TextAnimation extends StatefulWidget {
   const TextAnimation({super.key});
@@ -31,11 +32,10 @@ class _TextAnimationState extends State<TextAnimation> {
           AnimatedOpacity(
             opacity: customOpacity,
             duration: const Duration(milliseconds: 800),
-            child: const Text('Welcome to TinyDose!',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                    color: Color.fromARGB(255, 4, 46, 94))),
+            child: const Text(
+              'Welcome to TinyDose!',
+              style: kWelcomeText,
+            ),
           ),
         ],
       ),

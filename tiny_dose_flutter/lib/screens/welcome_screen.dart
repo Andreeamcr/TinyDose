@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tiny_dose_flutter/components/rotating_text_widget.dart';
+import 'package:tiny_dose_flutter/screens/auth_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static String id = 'welcome';
@@ -15,6 +16,7 @@ class WelcomeScreen extends StatefulWidget {
 class WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: ListView(
@@ -23,12 +25,13 @@ class WelcomeScreenState extends State<WelcomeScreen> {
             children: [
               Lottie.asset('assets/animations/Animation - 1713710022948.json'),
               const TextAnimation(),
-              const SizedBox(
-                height: 12,
+              SizedBox(
+                height: height * 0.03,
               ),
               IconButton(
                 onPressed: () {
                   print('Hello from WelcomeScreen!');
+                  Navigator.pushNamed(context, AuthScreen.id);
                 },
                 icon: const Icon(
                   Icons.arrow_circle_right_outlined,
