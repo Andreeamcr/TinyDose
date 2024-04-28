@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tiny_dose_flutter/screens/auth_screen.dart';
+import 'package:tiny_dose_flutter/screens/records_screen.dart';
 import 'utils/app_theme.dart';
 import 'screens/welcome_screen.dart';
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
         routes: {
           WelcomeScreen.id: (context) => const WelcomeScreen(),
           AuthScreen.id: (context) => const AuthScreen(),
+          MedicalRecordScreen.id: (context) => const MedicalRecordScreen(),
         });
   }
 }

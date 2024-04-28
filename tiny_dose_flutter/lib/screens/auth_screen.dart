@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tiny_dose_flutter/components/form_field_widget.dart';
+import 'package:tiny_dose_flutter/screens/records_screen.dart';
 import 'package:tiny_dose_flutter/utils/constants.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -41,6 +42,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   obscure: false,
                   suggestions: true,
                   labelColor: TextStyle(color: kDeepBlue),
+                  inputBorder: UnderlineInputBorder(),
                 ),
                 const CustomFormField(
                   inputLabel: 'Parola',
@@ -51,12 +53,15 @@ class _AuthScreenState extends State<AuthScreen> {
                   obscure: true,
                   suggestions: false,
                   labelColor: TextStyle(color: kDeepBlue),
+                  inputBorder: UnderlineInputBorder(),
                 ),
                 SizedBox(
                   height: height * 0.1,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, MedicalRecordScreen.id);
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kDeepBlue.withOpacity(0.8),
                   ),
@@ -66,7 +71,9 @@ class _AuthScreenState extends State<AuthScreen> {
                     child: const Text(
                       'Conectare',
                       style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17),
                     ),
                   ),
                 ),
