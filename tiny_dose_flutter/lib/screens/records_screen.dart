@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tiny_dose_flutter/components/form_field_widget.dart';
+import 'package:tiny_dose_flutter/components/med_file.dart';
 import 'package:tiny_dose_flutter/utils/constants.dart';
 
 class MedicalRecordScreen extends StatefulWidget {
@@ -13,6 +14,7 @@ class MedicalRecordScreen extends StatefulWidget {
 class _MedicalRecordScreenState extends State<MedicalRecordScreen> {
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -25,31 +27,25 @@ class _MedicalRecordScreenState extends State<MedicalRecordScreen> {
             Navigator.pop(context);
           },
         ),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {
-        //       print('first action button pressed');
-        //     },
-        //     icon: const Icon(Icons.search),
-        //   )
-        // ],
       ),
       body: ListView(
-        children: [
+        children: const [
           SizedBox(
             height: 60,
           ),
           Text('Hello from under the water'),
-          Row(
-            children: [
-              Column(
-                children: [Text('Hello from between')],
-              ),
-              Column(
-                children: [Text('Hello from between too')],
-              ),
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //   children: [
+          MedicalFile(),
+          // Column(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     Text('Hello from between too'),
+          //   ],
+          // ),
+          //   ],
+          // ),
           Text('Hello from under the water'),
         ],
       ),

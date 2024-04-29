@@ -42,7 +42,6 @@ class _AuthScreenState extends State<AuthScreen> {
                   obscure: false,
                   suggestions: true,
                   labelColor: TextStyle(color: kDeepBlue),
-                  inputBorder: UnderlineInputBorder(),
                 ),
                 const CustomFormField(
                   inputLabel: 'Parola',
@@ -53,7 +52,6 @@ class _AuthScreenState extends State<AuthScreen> {
                   obscure: true,
                   suggestions: false,
                   labelColor: TextStyle(color: kDeepBlue),
-                  inputBorder: UnderlineInputBorder(),
                 ),
                 SizedBox(
                   height: height * 0.1,

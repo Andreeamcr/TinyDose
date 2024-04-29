@@ -3,22 +3,18 @@ import 'package:flutter/material.dart';
 class CustomFormField extends StatelessWidget {
   const CustomFormField({
     super.key,
-    this.inputLabel,
-    this.hintText,
+    required this.inputLabel,
     this.icon,
     required this.obscure,
     this.suggestions,
     this.labelColor,
-    required this.inputBorder,
   });
 
-  final String? inputLabel;
-  final String? hintText;
+  final String inputLabel;
   final Icon? icon;
   final bool obscure;
   final bool? suggestions;
   final TextStyle? labelColor;
-  final InputBorder? inputBorder;
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +26,7 @@ class CustomFormField extends StatelessWidget {
       child: TextFormField(
         decoration: InputDecoration(
           labelStyle: labelColor,
-          hintText: hintText,
-          border: inputBorder,
+          border: const UnderlineInputBorder(),
           labelText: inputLabel,
           prefixIcon: icon,
         ),
