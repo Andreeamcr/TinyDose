@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tiny_dose_flutter/components/form_field_widget.dart';
 import 'package:tiny_dose_flutter/components/med_file.dart';
 import 'package:tiny_dose_flutter/utils/constants.dart';
 
@@ -33,20 +32,7 @@ class _MedicalRecordScreenState extends State<MedicalRecordScreen> {
           SizedBox(
             height: 60,
           ),
-          Text('Hello from under the water'),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //   children: [
           MedicalFile(),
-          // Column(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     Text('Hello from between too'),
-          //   ],
-          // ),
-          //   ],
-          // ),
-          Text('Hello from under the water'),
         ],
       ),
     );
