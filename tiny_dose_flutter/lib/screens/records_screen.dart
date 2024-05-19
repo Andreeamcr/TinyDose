@@ -13,7 +13,6 @@ class MedicalRecordScreen extends StatefulWidget {
 class _MedicalRecordScreenState extends State<MedicalRecordScreen> {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text(

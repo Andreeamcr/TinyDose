@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tiny_dose_flutter/components/form_field_widget.dart';
-import 'package:tiny_dose_flutter/screens/records_screen.dart';
+import 'package:tiny_dose_flutter/screens/patients_screen.dart';
 import 'package:tiny_dose_flutter/utils/constants.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -58,7 +58,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, MedicalRecordScreen.id);
+                    Navigator.pushNamed(context, PatientsListScreen.id);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kDeepBlue.withOpacity(0.8),

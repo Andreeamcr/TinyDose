@@ -30,7 +30,6 @@ class WelcomeScreenState extends State<WelcomeScreen> {
               ),
               IconButton(
                 onPressed: () {
-                  print('Hello from WelcomeScreen!');
                   Navigator.pushNamed(context, AuthScreen.id);
                 },
                 icon: const Icon(
