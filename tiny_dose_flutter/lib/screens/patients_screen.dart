@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:lottie/lottie.dart';
 import 'package:tiny_dose_flutter/components/patients_list.dart';
 import 'package:tiny_dose_flutter/utils/constants.dart';
 
@@ -19,7 +19,6 @@ class _PatientsListScreenState extends State<PatientsListScreen> {
     'Vasilescu Patricia',
     'Lucaci Simion',
     'asfbjasbfck',
-    '',
     'sgs',
     'gerujher',
     'rherre',
@@ -76,21 +75,25 @@ class _PatientsListScreenState extends State<PatientsListScreen> {
         ),
       ),
       body: Row(
+        // mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: height * 0.02,
-                ),
-                SizedBox(
-                  width: width * 0.5,
-                  height: height * 0.9,
-                  child: PatientsList(
-                    items: filteredItems,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: width * 0.03),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: height * 0.02,
                   ),
-                ),
-              ],
+                  SizedBox(
+                    width: width * 0.5,
+                    height: height * 0.9,
+                    child: PatientsList(
+                      items: filteredItems,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           SizedBox(
@@ -100,19 +103,43 @@ class _PatientsListScreenState extends State<PatientsListScreen> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               SizedBox(
-                height: height * 0.05,
+                height: height * 0.08,
               ),
               SizedBox(
                 width: width * 0.3,
                 height: height * 0.1,
                 child: TextField(
                   controller: searchController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Căutare după nume',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.search),
+                    labelStyle: kRalewayBoldFont,
+                    border: const OutlineInputBorder(),
+                    prefixIcon: const Icon(Icons.search),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: height * 0.05,
+              ),
+              SizedBox(
+                width: width * 0.15,
+                height: height * 0.1,
+                child: FloatingActionButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Adăugare pacient nou',
+                    style: kRalewayBoldFont,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: height * 0.15,
+              ),
+              SizedBox(
+                width: width * 0.3,
+                height: height * 0.38,
+                child: Lottie.asset(
+                    'assets/animations/Animation - 1716146851860.json'),
               ),
             ],
           ),
