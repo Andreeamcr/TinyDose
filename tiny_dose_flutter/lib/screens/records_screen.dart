@@ -27,8 +27,8 @@ class _MedicalRecordScreenState extends State<MedicalRecordScreen> {
         ),
       ),
       body: ListView(
-        children: const [
-          SizedBox(
+        children: [
+          const SizedBox(
             height: 60,
           ),
           MedicalFile(),

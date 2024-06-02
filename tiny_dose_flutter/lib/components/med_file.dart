@@ -1,8 +1,49 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'dart:convert';
 
-class MedicalFile extends StatelessWidget {
-  const MedicalFile({super.key});
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:tiny_dose_flutter/components/recomandare.dart';
+import 'package:tiny_dose_flutter/utils/constants.dart';
+import 'package:http/http.dart' as http;
+
+class MedicalFile extends StatefulWidget {
+  MedicalFile({super.key});
+
+  @override
+  State<MedicalFile> createState() => _MedicalFileState();
+}
+
+class _MedicalFileState extends State<MedicalFile> {
+  final TextEditingController _controller = TextEditingController();
+  Future<Recomandare>? _futureRecomandare;
+
+  Future<Recomandare> createRecomandare(String input) async {
+    final response = await http.post(
+      Uri.parse('http://localhost:8000/prescription'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: jsonEncode(
+        <String, String>{
+          'firstName': 'Alex',
+          'lastName': 'Morar',
+          'age': '13',
+          'weight': '34',
+          'meds': 'MAGNE drajeuri'
+        },
+      ),
+    );
+
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      return Recomandare.fromJson(
+          jsonDecode(response.body) as Map<String, dynamic>);
+    } else {
+      throw Exception('Failed to get response from sever');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +111,7 @@ class MedicalFile extends StatelessWidget {
                         height: height * 0.08,
                         child: const TextField(
                           decoration: InputDecoration(
-                            labelText: 'Anul: ',
+                            labelText: 'Anul: 2010',
                             floatingLabelBehavior: FloatingLabelBehavior.auto,
                           ),
                         ),
@@ -84,7 +125,7 @@ class MedicalFile extends StatelessWidget {
                         height: height * 0.08,
                         child: const TextField(
                           decoration: InputDecoration(
-                            labelText: 'Luna: ',
+                            labelText: 'Luna: 08',
                             floatingLabelBehavior: FloatingLabelBehavior.auto,
                           ),
                         ),
@@ -98,7 +139,7 @@ class MedicalFile extends StatelessWidget {
                         height: height * 0.08,
                         child: const TextField(
                           decoration: InputDecoration(
-                            labelText: 'Ziua: ',
+                            labelText: 'Ziua: 13',
                             floatingLabelBehavior: FloatingLabelBehavior.auto,
                           ),
                         ),
@@ -125,7 +166,7 @@ class MedicalFile extends StatelessWidget {
                         height: height * 0.08,
                         child: const TextField(
                           decoration: InputDecoration(
-                            labelText: 'Prenume: ',
+                            labelText: 'Prenume: George',
                             floatingLabelBehavior: FloatingLabelBehavior.auto,
                           ),
                         ),
@@ -454,7 +495,75 @@ class MedicalFile extends StatelessWidget {
             ),
           ),
         ),
+        Row(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: width * 0.02),
+              child: SizedBox(
+                width: width * 0.2,
+                height: height * 0.05,
+                // padding: EdgeInsets.only(left: width * 0.04, bottom: height * 0.05),
+                child: TextField(
+                  controller: _controller,
+                  decoration: const InputDecoration(
+                    labelText: 'Nume medicament: ',
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: width * 0.05,
+            ),
+            SizedBox(
+              width: width * 0.1,
+              height: height * 0.06,
+              child: FloatingActionButton(
+                onPressed: () {
+                  setState(() {
+                    _futureRecomandare = createRecomandare(_controller.text);
+                  });
+                },
+                child: Text(
+                  'Caută',
+                  style: kRalewayBoldFont,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: width * 0.05,
+            ),
+            SingleChildScrollView(
+              child: SizedBox(
+                width: width * 0.3,
+                height: height * 0.2,
+                child: (_futureRecomandare == null)
+                    ? const Text('')
+                    : buildFutureBuilder(),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: height * 0.1,
+        ),
       ],
+    );
+  }
+
+  FutureBuilder<Recomandare> buildFutureBuilder() {
+    return FutureBuilder(
+      future: _futureRecomandare,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text(snapshot.data!.rezultat);
+        } else if (snapshot.hasError) {
+          print("Am I here?");
+          return Text('${snapshot.error}');
+        }
+
+        return const CircularProgressIndicator();
+      },
     );
   }
 }

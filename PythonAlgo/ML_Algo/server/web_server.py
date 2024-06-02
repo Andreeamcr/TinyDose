@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
-
+from flask_cors import CORS, cross_origin
 
 class WebServer:
     def __init__(self, pipeline_processor, file_processor):
         self.app = Flask(__name__)
         self.add_routes()
+        self.cors = CORS(self.app)
+        self.app.config['CORS_HEADERS'] = 'Content-Type'
         self.pipelineProcessor = pipeline_processor
         self.fileProcessor = file_processor
 
@@ -18,11 +20,12 @@ class WebServer:
                 print(f"An error has occurred: {e}")
                 return jsonify({'message': 'An Internal error has occurred'}), 500
 
-        @self.app.route('/prescription', methods=['POST'])
+        @self.app.route('/prescription', methods=['POST', 'OPTIONS'])
         def get_prescriptions():
             # Handle POST request
+            print("will this be hand")
             data = request.json
-            first_med = data['meds'][0]
+            first_med = data['meds']
             print(first_med)
             prescription_text = self.fileProcessor.extract_section_by_name(first_med)
             print(prescription_text)
@@ -30,7 +33,9 @@ class WebServer:
             try:
                 response = self.pipelineProcessor.processInput(prescription_text)
                 processed_prescription = self.pipelineProcessor.process_data(data['age'], response)
-                return jsonify({'med': first_med, 'text': prescription_text, 'data': response, 'prescriptie': processed_prescription})
+                html_response = jsonify({'med': first_med, 'text': prescription_text, 'data': response, 'prescriptie': processed_prescription})
+                html_response.headers.add("Access-Control-Allow-Origin", "*")
+                return html_response
             except Exception as e:
                 print(f"An error has occurred: {e}")
                 return jsonify({'message': 'An Internal error has occurred'}), 500
