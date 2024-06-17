@@ -1,12 +1,11 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tiny_dose_flutter/components/recomandare.dart';
 import 'package:tiny_dose_flutter/utils/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 
 class MedicalFile extends StatefulWidget {
   MedicalFile({super.key});
@@ -18,6 +17,7 @@ class MedicalFile extends StatefulWidget {
 class _MedicalFileState extends State<MedicalFile> {
   final TextEditingController _controller = TextEditingController();
   Future<Recomandare>? _futureRecomandare;
+  String _pacienti = '';
 
   Future<Recomandare> createRecomandare(String input) async {
     final response = await http.post(
@@ -45,6 +45,63 @@ class _MedicalFileState extends State<MedicalFile> {
     }
   }
 
+  // Future<String> get _localPath async {
+  //   final directory = await getApplicationDocumentsDirectory();
+  //   print('json path: ${directory.path}');
+  //   return directory.path;
+  // }
+
+  Future<File> get _localFile async {
+    // final path = await _localPath;
+    return File('assets/fisa_medicala.json');
+  }
+
+  Future<File> writeData(Map<String, dynamic> data) async {
+    final file = await _localFile;
+    String jsonString = jsonEncode(data);
+    return file.writeAsString(jsonString);
+  }
+
+  Future<Map<String, dynamic>> readData() async {
+    try {
+      final file = await _localFile;
+      String contents = await file.readAsString();
+      return jsonDecode(contents);
+    } catch (e) {
+      return {};
+    }
+  }
+
+  TextEditingController LastNameController = TextEditingController();
+  TextEditingController FirstNameController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    Map<String, dynamic> savedData = await readData();
+    LastNameController.text = savedData['LastName'] ?? '';
+    FirstNameController.text = savedData['FirstName'] ?? '';
+  }
+
+  Future<void> _saveData() async {
+    Map<String, dynamic> dataToSave = {
+      'LastName': LastNameController.text,
+      'FirstName': FirstNameController.text,
+    };
+    await writeData(dataToSave);
+  }
+
+  @override
+  void dispose() {
+    LastNameController.dispose();
+    FirstNameController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -64,7 +121,9 @@ class _MedicalFileState extends State<MedicalFile> {
                   child: SizedBox(
                     width: width * 0.15,
                     height: height * 0.08,
-                    child: const TextField(
+                    child: TextField(
+                      controller: LastNameController,
+                      onChanged: (value) => _saveData(),
                       decoration: InputDecoration(
                         labelText: 'Nume: Popescu',
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
@@ -111,7 +170,7 @@ class _MedicalFileState extends State<MedicalFile> {
                         height: height * 0.08,
                         child: const TextField(
                           decoration: InputDecoration(
-                            labelText: 'Anul: 2010',
+                            labelText: 'Anul: 2011',
                             floatingLabelBehavior: FloatingLabelBehavior.auto,
                           ),
                         ),
@@ -506,7 +565,7 @@ class _MedicalFileState extends State<MedicalFile> {
                 child: TextField(
                   controller: _controller,
                   decoration: const InputDecoration(
-                    labelText: 'Nume medicament: ',
+                    //labelText: 'Nume medicament: ',
                     floatingLabelBehavior: FloatingLabelBehavior.auto,
                   ),
                 ),

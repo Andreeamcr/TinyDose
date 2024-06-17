@@ -18,12 +18,12 @@ class _PatientsListScreenState extends State<PatientsListScreen> {
     'Amariei Georgiana',
     'Vasilescu Patricia',
     'Lucaci Simion',
-    'asfbjasbfck',
-    'sgs',
-    'gerujher',
-    'rherre',
-    'ytjrt',
-    'sgsg',
+    'Popa Maria-Mirabela',
+    'Stangu Denisa',
+    'Freier Georgel',
+    'Calapis Suzana',
+    'Balas Cristian',
+    'Neagu George-Mihai',
   ];
   List<String> filteredItems = [];
   TextEditingController searchController = TextEditingController();
